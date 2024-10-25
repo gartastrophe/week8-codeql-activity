@@ -1,0 +1,21 @@
+/**
+ * @description Find functions calling pressActionKey
+ * @kind problem
+ * @id javascript/functions-calling-pressactionkey
+ * @problem.severity recommendation
+ */
+import javascript
+
+/**
+* Holds if `caller` contains a call to "pressActionKey".
+*/
+predicate callsActionKey(Function caller) {
+  exists(DataFlow::CallNode call |
+    call.getEnclosingFunction() = caller and
+    call.getCalleeName() = "pressActionKey"
+  )
+}
+
+from, Function callee
+where callsActionKey(caller)
+select caller, "contains a call to pressActionKey"
